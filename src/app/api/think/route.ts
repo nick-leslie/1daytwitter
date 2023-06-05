@@ -3,20 +3,24 @@ import {PrismaClient, Thought, User} from "@prisma/client";
 
 export function GET(request:NextRequest) {
     const prisma = new PrismaClient();
-
-    return prisma.thought.findMany(
-    {include: {
-            User: { select: { username:true }, }
-        }
-    }).then(
-       async (thoughtsJson) => {
-            await prisma.$disconnect();
-            return  NextResponse.json(thoughtsJson);
-        }
-    ).catch(async (err) => {
+    return GetThoughts().then((thoughts) => {
+        return NextResponse.json(thoughts);
+    }).catch(async (err) => {
         await prisma.$disconnect();
 
         return NextResponse.json("something went wrong " + err)
+    });
+}
+
+export async function GetThoughts() {
+    const prisma = new PrismaClient();
+    return prisma.thought.findMany(
+        {include: {
+                User: { select: { username:true }, }
+            }
+        }).then(async (thoughts)=> {
+            await prisma.$disconnect();
+            return thoughts;
     });
 }
 

@@ -1,14 +1,16 @@
 import Link from "next/link";
 import {cookies} from "next/headers";
-import {fetchUser} from "@/app/homepage-comps/thoughts/fetchUser";
 import {User} from "@prisma/client";
+import {GetUser} from "@/app/api/user/route";
 ``
 export default async function Navbar() {
     let id = cookies().get("userid")?.value;
     let username = ""
     if (id != undefined) {
-        let user:User = await fetchUser(parseInt(id));
-        username = user.username;
+        let user:User | undefined = await GetUser(parseInt(id));
+        if(user != undefined) {
+            username = user.username;
+        }
     }
     return (
         <div className={"flex flex-row-reverse"}>

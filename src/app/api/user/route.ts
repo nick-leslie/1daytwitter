@@ -3,20 +3,22 @@ import {PrismaClient, User} from "@prisma/client";
 import {json} from "stream/consumers";
 
 export async function POST(request:NextRequest) {
-    console.log("yooo")
-    const prisma = new PrismaClient();
     let user = await request.json();
-    console.log(user.id);
+    return NextResponse.json(GetUser(user.id));
+}
+
+export async function GetUser(id:number) {
+    const prisma = new PrismaClient();
     try {
         let fetchedUser = await prisma.user.findFirstOrThrow({
             where: {
-                id:user.id
+                id:id
             }});
         await prisma.$disconnect();
-        return NextResponse.json(fetchedUser);
+        return fetchedUser;
     } catch (err) {
         console.log("failed to fetch", err);
         await prisma.$disconnect();
-        return NextResponse.json("failed to fetch")
+        return undefined;
     }
 }

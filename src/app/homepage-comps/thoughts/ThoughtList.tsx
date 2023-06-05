@@ -1,8 +1,8 @@
 import {Thought} from "@prisma/client";
 import ThoughtWiddget from "@/app/homepage-comps/thoughts/ThoughtWiddget";
-import fetchThoughts from "@/app/homepage-comps/thoughts/fetchThink";
+import {GetThoughts} from "@/app/api/think/route";
 export default async function ThoughtList() {
-    let thoughts:  (Thought & {User:{username:string}})[] = await fetchThoughts();
+    let thoughts:  ((Thought & {User:{username:string} | null }))[] = await GetThoughts();
     return(
         <div className={"flex flex-col"}>
             {thoughts.map((thought) => {
