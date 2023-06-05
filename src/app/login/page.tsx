@@ -15,7 +15,6 @@ export default function Page() {
 
     return (
         <div>
-            <Link href={"/"}>fjdklsa</Link>
             <form onSubmit={handleSub}>
                 <label htmlFor="username">Think</label>
                 <input className={"text-black"} type="text" id="username" name="username" required />
