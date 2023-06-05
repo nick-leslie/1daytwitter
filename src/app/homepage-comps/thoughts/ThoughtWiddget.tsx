@@ -9,8 +9,14 @@ export default function ThoughtWiddget(props:thoughtProps) {
         username = "";
     }
     return(
-        <div className={"flex-col flex-row"}>
-            <h1>{username} :{props.thought.text}</h1>
+        <div className={"flex flex-row border-white border-solid shadow-white rounded-lg border-2 mx-6 my-2 py-2"}>
+            <div className={"flex flex-col"}>
+                <div className={"flex flex-row"}>
+                    <h1 className={"mx-1 text-green-600"}> {username}</h1>
+                    <h1>Thought:</h1>
+                </div>
+            <h1 className={"mx-32 py-2"}>{props.thought.text}</h1>
+            </div>
         </div>
     )
 
