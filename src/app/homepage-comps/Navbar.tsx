@@ -1,13 +1,13 @@
 import Link from "next/link";
 import {cookies} from "next/headers";
 import {User} from "@prisma/client";
-import {GetUser} from "@/app/api/user/route";
+import {getUser} from "@/app/api/user/getUser";
 ``
 export default async function Navbar() {
     let id = cookies().get("userid")?.value;
     let username = ""
     if (id != undefined) {
-        let user:User | undefined = await GetUser(parseInt(id));
+        let user:User | undefined = await getUser(parseInt(id));
         if(user != undefined) {
             username = user.username;
         }
